@@ -1,0 +1,19 @@
+name: link-check
+on:
+  schedule:
+    - cron: "0 6 1 * *"
+  workflow_dispatch:
+jobs:
+  lychee:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check links
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: >-
+            --verbose --no-progress
+            --exclude 'smythos\.com'
+            README.md docs/*.md
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
